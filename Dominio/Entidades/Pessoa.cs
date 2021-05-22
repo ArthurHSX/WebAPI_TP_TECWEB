@@ -13,9 +13,8 @@ namespace Dominio.Entidades
         public string Email { get; set; }
         public int Telefone { get; set; }
         public bool? Excluido { get; set; }
-        public int? Idusuario { get; set; }
-
-        public virtual Usuario IdusuarioNavigation { get; set; }
+        public int Idusuario { get; set; }
+        
         public virtual ICollection<ReuniaoPessoa> ReuniaoPessoas { get; set; }
     }
 }

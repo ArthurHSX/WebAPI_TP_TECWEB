@@ -63,6 +63,9 @@ namespace Dados.Contexto
             {
                 entity.ToTable("Pessoa");
 
+                entity.HasIndex(e => e.Idusuario, "UNK_Pessoa_IdUsuario")
+                    .IsUnique();
+
                 entity.Property(e => e.ID).HasColumnName("ID");
 
                 entity.Property(e => e.Email)
@@ -82,11 +85,6 @@ namespace Dados.Contexto
                     .HasColumnName("NOME");
 
                 entity.Property(e => e.Telefone).HasColumnName("TELEFONE");
-
-                entity.HasOne(d => d.IdusuarioNavigation)
-                    .WithMany(p => p.Pessoas)
-                    .HasForeignKey(d => d.Idusuario)
-                    .HasConstraintName("FK_Pessoa_Usuario");
             });
 
             modelBuilder.Entity<Reuniao>(entity =>
@@ -124,15 +122,15 @@ namespace Dados.Contexto
 
                 entity.Property(e => e.Usuariocriador).HasColumnName("USUARIOCRIADOR");
 
-                entity.HasOne(d => d.IdLocalNavigation)
-                    .WithMany(p => p.Reuniaos)
-                    .HasForeignKey(d => d.IdLocal)
-                    .HasConstraintName("FK_Reuniao_Reuniao_Local");
+                //entity.HasOne(d => d.IdLocalNavigation)
+                //    .WithMany(p => p.Reuniaos)
+                //    .HasForeignKey(d => d.IdLocal)
+                //    .HasConstraintName("FK_Reuniao_Reuniao_Local");
 
-                entity.HasOne(d => d.UsuariocriadorNavigation)
-                    .WithMany(p => p.Reunioes)
-                    .HasForeignKey(d => d.Usuariocriador)
-                    .HasConstraintName("FK_Reuniao_Usuario");
+                //entity.HasOne(d => d.UsuariocriadorNavigation)
+                //    .WithMany(p => p.R)
+                //    .HasForeignKey(d => d.Usuariocriador)
+                //    .HasConstraintName("FK_Reuniao_Usuario");
             });
 
             modelBuilder.Entity<ReuniaoLocal>(entity =>
@@ -186,22 +184,18 @@ namespace Dados.Contexto
             {
                 entity.ToTable("Sessao");
 
+                entity.HasIndex(e => e.IdUsuario, "UNK_Sessao_IdUsuario")
+                    .IsUnique();
+
                 entity.Property(e => e.ID).HasColumnName("ID");
 
                 entity.Property(e => e.Dtcriacao)
                     .HasColumnType("datetime")
                     .HasColumnName("DTCRIACAO");
 
-                entity.Property(e => e.Guid)
-                    .HasColumnName("GUID")
-                    .HasDefaultValueSql("(newid())");
+                entity.Property(e => e.Guid).HasColumnName("GUID");
 
-                entity.Property(e => e.IdUsuario).HasColumnName("ID_USUARIO");
-
-                entity.HasOne(d => d.IdusuarioNavigation)
-                    .WithMany(p => p.Sessoes)
-                    .HasForeignKey(d => d.IdUsuario)
-                    .HasConstraintName("FK_Sessao_Usuario");
+                entity.Property(e => e.IdUsuario).HasColumnName("IDUSUARIO");
             });
 
             modelBuilder.Entity<Usuario>(entity =>

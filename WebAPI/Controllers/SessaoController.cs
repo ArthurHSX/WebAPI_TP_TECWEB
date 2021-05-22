@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
         public IActionResult Create([FromBody] CreateModeloSessao sessao)
         {
             if (sessao == null)
-                return NotFound();
+                return NotFound();            
 
             return Execute(() => _baseUserService.Add<CreateModeloSessao, SessaoModelo, SessaoValidator>(sessao).ID);
         }

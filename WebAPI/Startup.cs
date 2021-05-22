@@ -45,16 +45,19 @@ namespace WebAPI
             });
 
             services.AddScoped<IRepositorioBase<Usuario>, TecWEBRepositorio<Usuario>>();
-            services.AddScoped<IServicoBase<Usuario>, BaseServico<Usuario>>();
             services.AddScoped<IRepositorioBase<Sessao>, TecWEBRepositorio<Sessao>>();
+
+            services.AddScoped<IServicoBase<Usuario>, BaseServico<Usuario>>();            
             services.AddScoped<IServicoBase<Sessao>, BaseServico<Sessao>>();
 
             services.AddSingleton(new MapperConfiguration(config =>
             {
                 config.CreateMap<CreateModeloUsuario, Usuario>();
+                config.CreateMap<CreateModeloSessao, Sessao>();
+
                 config.CreateMap<UpdateModeloUsuario, Usuario>();
-                config.CreateMap<Usuario, UsuarioModelo>();
-                config.CreateMap<CreateModeloSessao, Sessao>();                
+
+                config.CreateMap<Usuario, UsuarioModelo>();                
                 config.CreateMap<Sessao, SessaoModelo>();
 
             }).CreateMapper());
