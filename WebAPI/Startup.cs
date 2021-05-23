@@ -27,7 +27,19 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddControllers();
+
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("CorsPolicy",
+            //                      builder =>
+            //                      {
+            //                          builder.AllowAnyOrigin() //WithOrigins("*/*")
+            //                            .AllowAnyMethod()
+            //                            .AllowAnyHeader();
+            //                      });
+            //});
 
             services.AddDbContext<SqlServerContext>(options =>
             {
@@ -66,22 +78,14 @@ namespace WebAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
             });
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: "_myAllowSpecificOrigins",
-                                  builder =>
-                                  {
-                                      builder.WithOrigins("http://127.0.0.1:5500")
-                                                    .AllowAnyHeader()
-                                                    .AllowAnyMethod();
-                                  });
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(
+                options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+            );
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -101,8 +105,6 @@ namespace WebAPI
             {
                 endpoints.MapControllers();
             });
-
-            app.UseCors("_myAllowSpecificOrigins");
         }
     }
 }
