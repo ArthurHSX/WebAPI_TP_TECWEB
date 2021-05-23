@@ -19,7 +19,7 @@ namespace Dados.Repositorio
         public TEntity Select(int id)
         {
             return contexto.Set<TEntity>().Find(id);
-        }
+        }        
 
         public IList<TEntity> Select()
         {
@@ -34,7 +34,10 @@ namespace Dados.Repositorio
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var obj = contexto.Set<TEntity>().Find(id);
+
+            contexto.Set<TEntity>().Remove(obj);
+            contexto.SaveChanges();
         }
 
         public void Insert(TEntity obj)

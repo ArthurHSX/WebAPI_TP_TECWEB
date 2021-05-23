@@ -16,6 +16,8 @@ namespace Dominio.Interfaces
 
         IEnumerable<TOutputModel> Get<TOutputModel>() where TOutputModel : class;
 
+        //TOutputModel GetByNome<TOutputModel>(string nome) where TOutputModel : class;
+
         TOutputModel GetById<TOutputModel>(int id) where TOutputModel : class;
 
         TOutputModel Update<TInputModel, TOutputModel, TValidator>(TInputModel inputModel)

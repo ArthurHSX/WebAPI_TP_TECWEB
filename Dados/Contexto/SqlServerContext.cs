@@ -184,16 +184,21 @@ namespace Dados.Contexto
             {
                 entity.ToTable("Sessao");
 
+                entity.HasKey(e => e.ID).HasName("PK_Autenticacao");
+
                 entity.HasIndex(e => e.IdUsuario, "UNK_Sessao_IdUsuario")
                     .IsUnique();
 
-                entity.Property(e => e.ID).HasColumnName("ID");
+                entity.Property(e => e.ID).HasColumnName("ID");                
 
                 entity.Property(e => e.Dtcriacao)
                     .HasColumnType("datetime")
                     .HasColumnName("DTCRIACAO");
 
-                entity.Property(e => e.Guid).HasColumnName("GUID");
+                entity.Property(e => e.Guid)
+                    .HasColumnType("uniqueidentifier")
+                    .HasColumnName("GUID")
+                    .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.IdUsuario).HasColumnName("IDUSUARIO");
             });

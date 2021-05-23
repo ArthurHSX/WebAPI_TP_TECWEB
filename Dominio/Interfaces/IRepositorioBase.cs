@@ -5,7 +5,7 @@ namespace Dominio.Interfaces
 {
     public interface IRepositorioBase<TEntity> where TEntity : EntidadeBase
     {
-        TEntity Select(int id);
+        TEntity Select(int id);        
         IList<TEntity> Select();
         void Insert(TEntity obj);
         void Update(TEntity obj);

@@ -54,6 +54,17 @@ namespace Servico.Servicos
             return outputModel;
         }
 
+        //public TOutputModel GetByNome<TOutputModel>(string nome) where TOutputModel : class
+        //{
+        //    var entities = _baseRepository.Select();
+
+        //    entities.Select(x => x.)
+
+        //    var outputModel = _mapper.Map<TOutputModel>(entity);
+
+        //    return outputModel;
+        //}
+
         public TOutputModel Update<TInputModel, TOutputModel, TValidator>(TInputModel inputModel)
             where TValidator : AbstractValidator<TEntity>
             where TInputModel : class

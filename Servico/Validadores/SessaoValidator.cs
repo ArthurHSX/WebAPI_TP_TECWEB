@@ -11,9 +11,9 @@ namespace Servico.Validadores
                 .NotEmpty().WithMessage("O IdUsuario não pode ser vazio.")
                 .NotNull().WithMessage("O IdUsuario não pode ser null.");
 
-            RuleFor(c => c.Guid)
-                    .NotEmpty().WithMessage("O Guid não pode ser vazio.")
-                    .NotNull().WithMessage("O Guid não pode ser null.");
+            //RuleFor(c => c.Guid)
+            //        .NotEmpty().WithMessage("O Guid não pode ser vazio.")
+            //        .NotNull().WithMessage("O Guid não pode ser null.");
         }            
     }
 }

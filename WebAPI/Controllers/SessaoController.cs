@@ -4,6 +4,7 @@ using Dominio.Interfaces;
 using Servico.Validadores;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -19,12 +20,21 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateModeloSessao sessao)
+        public ActionResult<ResponseCreateSessao> Create([FromBody] CreateModeloSessao sessao)
         {
             if (sessao == null)
-                return NotFound();            
+            {
 
-            return Execute(() => _baseUserService.Add<CreateModeloSessao, SessaoModelo, SessaoValidator>(sessao).ID);
+                return NotFound();
+            }
+
+            var resultado = new ResponseCreateSessao()
+            {
+                Guid = (Guid)_baseUserService.Add<CreateModeloSessao, SessaoModelo, SessaoValidator>(sessao).Guid
+            };
+
+
+            return resultado;            
         }
 
         [HttpPut]
