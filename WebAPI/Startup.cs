@@ -27,7 +27,6 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
 
             services.AddDbContext<SqlServerContext>(options =>
@@ -66,7 +65,18 @@ namespace WebAPI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
-            });                        
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "_myAllowSpecificOrigins",
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://127.0.0.1:5500")
+                                                    .AllowAnyHeader()
+                                                    .AllowAnyMethod();
+                                  });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -91,6 +101,8 @@ namespace WebAPI
             {
                 endpoints.MapControllers();
             });
+
+            app.UseCors("_myAllowSpecificOrigins");
         }
     }
 }
