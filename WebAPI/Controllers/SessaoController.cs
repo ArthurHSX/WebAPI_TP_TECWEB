@@ -5,6 +5,7 @@ using Servico.Validadores;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace WebAPI.Controllers
 {
@@ -24,17 +25,27 @@ namespace WebAPI.Controllers
         {
             if (sessao == null)
             {
-
                 return NotFound();
             }
 
-            var resultado = new ResponseCreateSessao()
+            var listaUsuarios = _baseUserService.Get<SessaoModelo>().ToList();
+
+            var usuario = listaUsuarios.Where(x => x.IdUsuario == sessao.IdUsuario);
+
+            if (!usuario.Any())
             {
-                Guid = (Guid)_baseUserService.Add<CreateModeloSessao, SessaoModelo, SessaoValidator>(sessao).Guid
-            };
-
-
-            return resultado;            
+                return new ResponseCreateSessao()
+                {
+                    Guid = (Guid)_baseUserService.Add<CreateModeloSessao, SessaoModelo, SessaoValidator>(sessao).Guid
+                };
+            }
+            else
+            {
+                return new ResponseCreateSessao()
+                {
+                    Guid = usuario.First().Guid.Value
+                };
+            }            
         }
 
         [HttpPut]
@@ -65,15 +76,19 @@ namespace WebAPI.Controllers
         public IActionResult Get()
         {
             return Execute(() => _baseUserService.Get<SessaoModelo>());
-        }
+        }        
 
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        [HttpGet("{guid}")]
+        public ActionResult<SessaoModelo> Get(Guid guid)
         {
-            if (id == 0)
-                return NotFound();
+            var listaUsuarios = _baseUserService.Get<SessaoModelo>().ToList();
 
-            return Execute(() => _baseUserService.GetById<SessaoModelo>(id));
+            var usuario = listaUsuarios.Any(x => x.Guid == guid);
+
+            if (usuario)
+                return Ok();
+            else
+                return Unauthorized();            
         }
 
         private IActionResult Execute(Func<object> func)
