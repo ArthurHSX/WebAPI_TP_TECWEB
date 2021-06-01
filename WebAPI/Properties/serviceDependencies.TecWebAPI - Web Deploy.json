@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "apis1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/WebAPIapi-TecWEB/apis/WebAPI",
+      "type": "apis.azure",
+      "apiEndpoint": "https://webapiapi-tecweb.azure-api.net/tecweb-1808-WebAPI"
+    },
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/tecweb-180861/databases/TECWEB",
+      "type": "mssql.azure",
+      "connectionId": "tecweb-180861.database.windows.net",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}
